@@ -1,0 +1,24 @@
+﻿<Window x:Class="NetConfPuebla.WpfClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetConfPuebla.WpfClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="buttonGetProducts" Content="Get Products" Margin="5" Padding="5" />
+            <Button x:Name="buttonInsertProduct" Content="Insert Product" Margin="5" Padding="5" />
+            <Button x:Name="buttonUpdateProduct" Content="Update Product" Margin="5" Padding="5" />
+        </StackPanel>
+        <DataGrid x:Name="dataGridProducts" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice}" />
+                <DataGridTextColumn Header="Units In Stock" Binding="{Binding UnitsInStock}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</Window>
