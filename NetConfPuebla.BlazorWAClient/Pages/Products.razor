@@ -1,0 +1,103 @@
+﻿@page "/products"
+@inject NavigationManager _navigationManager
+@inject HttpClient _httpClient
+@implements IDisposable
+
+<h3>Products</h3>
+
+<Title Value="@title"></Title>
+<Link rel="icon" type="image/x-icon" href="/icon.ico" />
+
+<div class="container">
+    <div class="form-group">
+        <button class="btn btn-outline-secondary" @onclick="GetProductsAsync">Get Products</button>
+        <button class="btn btn-outline-primary" @onclick="OnInsertProduct">Insert Product</button>
+        <button class="btn btn-outline-success" @onclick="OnUpdateProduct">Update Product</button>
+    </div>
+    <table class="table table-striped table-bordered table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Units In Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (products.Count == 0)
+            {
+                <tr><th colspan="4">Esperando datos...</th></tr>
+            }
+            else
+            {
+                @foreach (var p in products)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.UnitPrice</td>
+                        <td>@p.UnitsInStock</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private List<Product> products = new List<Product>();
+    private HubConnection hubConnection;
+    private string title ="Products";
+
+    protected async override Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(_navigationManager.ToAbsoluteUri("http://localhost:5000/northwindhub"))
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On<Product>("ReceiveInsertedProduct", product => InsertedProduct(product));
+
+        hubConnection.On<int, Product>("ReceiveUpdatedProduct", (id, product) => UpdatedProduct(id, product));
+
+        await hubConnection.StartAsync();
+
+        await GetProductsAsync();
+    }
+
+    private void InsertedProduct(Product product)
+    {
+        products.Add(product);
+        title = $"Products ({products.Count})";
+        StateHasChanged();
+    }
+
+    private void UpdatedProduct(int id, Product product)
+    {
+        products.RemoveAt(id - 1);
+        products.Insert(id - 1, product);
+        StateHasChanged();
+    }
+
+    private async Task GetProductsAsync()
+    {
+        products = await _httpClient.GetFromJsonAsync<List<Product>>("https://netconfapi20201114124013.azurewebsites.net/api/products");
+        title = $"Products ({products.Count})";
+    }
+
+    private async void OnInsertProduct()
+    {
+        var product = new Product { Name = "Producto nuevo BlazorWA", UnitPrice = 7.7m, UnitsInStock = 70, CategoryId = 1 };
+
+        await hubConnection.InvokeAsync("SendInsertProduct", product);
+    }
+
+    private async void OnUpdateProduct()
+    {
+        var product = new Product { Id = 2, Name = "Producto modificado BlazorWA", UnitPrice = 7.7m, UnitsInStock = 70, CategoryId = 1 };
+
+        await hubConnection.InvokeAsync("SendUpdateProduct", 2, product);
+    }
+
+    public async void Dispose() => await hubConnection.DisposeAsync();
+}

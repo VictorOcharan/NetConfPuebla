@@ -22,7 +22,7 @@ namespace NetConfPuebla.Server.Hubs
             var resultProduct = await _service.InsertProduct(product);
             if (resultProduct != null)
             {
-                await Clients.All.SendAsync("ReceiveInsertProduct", resultProduct);
+                await Clients.All.SendAsync("ReceiveInsertedProduct", resultProduct);
             }
         }
 
@@ -31,7 +31,7 @@ namespace NetConfPuebla.Server.Hubs
             var result = await _service.UpdateProduct(id, product);
             if (result)
             {
-                await Clients.All.SendAsync("ReceiveUpdateProduct", id, product);
+                await Clients.All.SendAsync("ReceiveUpdatedProduct", id, product);
             }
         }
     }

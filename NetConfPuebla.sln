@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetConfPuebla.Server", "NetConfPuebla.Server\NetConfPuebla.Server.csproj", "{723D3F96-1807-4CE0-9005-5B5A6E63787F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetConfPuebla.Server", "NetConfPuebla.Server\NetConfPuebla.Server.csproj", "{723D3F96-1807-4CE0-9005-5B5A6E63787F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetConfPuebla.Entities", "NetConfPuebla.Entities\NetConfPuebla.Entities.csproj", "{8FE5ED00-D90E-44DE-9CDA-698FB19B690F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetConfPuebla.Entities", "NetConfPuebla.Entities\NetConfPuebla.Entities.csproj", "{8FE5ED00-D90E-44DE-9CDA-698FB19B690F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetConfPuebla.WpfClient", "NetConfPuebla.WpfClient\NetConfPuebla.WpfClient.csproj", "{7F961640-D6DC-4C68-B81A-5AAB43A7B8C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetConfPuebla.WpfClient", "NetConfPuebla.WpfClient\NetConfPuebla.WpfClient.csproj", "{7F961640-D6DC-4C68-B81A-5AAB43A7B8C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetConfPuebla.BlazorWAClient", "NetConfPuebla.BlazorWAClient\NetConfPuebla.BlazorWAClient.csproj", "{89F07A5D-30A2-4EAB-A084-BB702FAC986B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7F961640-D6DC-4C68-B81A-5AAB43A7B8C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F961640-D6DC-4C68-B81A-5AAB43A7B8C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F961640-D6DC-4C68-B81A-5AAB43A7B8C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89F07A5D-30A2-4EAB-A084-BB702FAC986B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89F07A5D-30A2-4EAB-A084-BB702FAC986B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89F07A5D-30A2-4EAB-A084-BB702FAC986B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89F07A5D-30A2-4EAB-A084-BB702FAC986B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,25 +36,15 @@ namespace NetConfPuebla.WpfClient
                 .WithAutomaticReconnect()
                 .Build();
 
-            hubConnection.On<Product>("ReceiveInsertProduct", product => InsertProduct(product));
+            hubConnection.On<Product>("ReceiveInsertedProduct", product => InsertedProduct(product));
 
-            hubConnection.On<int, Product>("ReceiveUpdateProduct", (id, product) => UpdateProduct(id, product));
+            hubConnection.On<int, Product>("ReceiveUpdatedProduct", (id, product) => UpdatedProduct(id, product));
 
             hubConnection.StartAsync().GetAwaiter();
 
-            buttonGetProducts.Click += async (sender, e) =>
-            {
-                var httpClient = new HttpClient();
-                var response = await httpClient
-                    .GetAsync("https://netconfapi20201114124013.azurewebsites.net/api/products");
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    products = JsonSerializer
-                        .Deserialize<List<Product>>(json, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-                    dataGridProducts.ItemsSource = products;
-                }
-            };
+            GetProductsAsync().GetAwaiter();
+
+            buttonGetProducts.Click += async (sender, e) => await GetProductsAsync();
 
             buttonInsertProduct.Click += async (sender, e) =>
             {
@@ -71,13 +61,29 @@ namespace NetConfPuebla.WpfClient
             };
         }
 
-        private void InsertProduct(Product product)
+        private async Task GetProductsAsync()
+        {
+            var httpClient = new HttpClient();
+            var response = await httpClient
+                .GetAsync("https://netconfapi20201114124013.azurewebsites.net/api/products");
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                products = JsonSerializer
+                    .Deserialize<List<Product>>(json, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                dataGridProducts.ItemsSource = products;
+                labeRecords.Content = $"Records ({products.Count})";
+            }
+        }
+
+        private void InsertedProduct(Product product)
         {
             products.Add(product);
             dataGridProducts.Items.Refresh();
+            labeRecords.Content = $"Records ({products.Count})";
         }
 
-        private void UpdateProduct(int id, Product product)
+        private void UpdatedProduct(int id, Product product)
         {
             products.RemoveAt(id - 1);
             products.Insert(id -1, product);

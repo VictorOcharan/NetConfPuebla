@@ -5,20 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetConfPuebla.WpfClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
+        Title="Products" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button x:Name="buttonGetProducts" Content="Get Products" Margin="5" Padding="5" />
             <Button x:Name="buttonInsertProduct" Content="Insert Product" Margin="5" Padding="5" />
             <Button x:Name="buttonUpdateProduct" Content="Update Product" Margin="5" Padding="5" />
+            <Label x:Name="labeRecords" Margin="5" Padding="5" />
         </StackPanel>
-        <DataGrid x:Name="dataGridProducts" AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice}" />
-                <DataGridTextColumn Header="Units In Stock" Binding="{Binding UnitsInStock}" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </StackPanel>
+        <DockPanel Grid.Row="1">
+            <DataGrid x:Name="dataGridProducts" AlternatingRowBackground="AliceBlue" AutoGenerateColumns="False" IsReadOnly="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice}" />
+                    <DataGridTextColumn Header="Units In Stock" Binding="{Binding UnitsInStock}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+    </Grid>
 </Window>
